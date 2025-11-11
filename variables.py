@@ -4,8 +4,9 @@
 filas_tablero = 10
 cols_tablero = 10
 
-# Flota: “b” de “barco” + eslora (tamaño del barco)
-# Tamaño y total: 1 barco de 4, 2 barcos de 3, 3 barcos de 2 y 4 barcos de 1 = 10 barcos
+# Flota
+# Nombre de cada barco: “b” de “barco” + eslora (tamaño del barco)
+# Tamaño y total de barcos: 1 barco de 4, 2 barcos de 3, 3 barcos de 2 y 4 barcos de 1 = 10 barcos
 flota = {
     "b4_1": 4,
     "b3_1": 3,
@@ -24,3 +25,5 @@ agua = "~"
 barco = "O"
 disparo_perdido = "!"
 disparo_acertado = "X"
+
+# Si tenéis alguna duda y/o sugerencia, avisarme!
