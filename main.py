@@ -1,24 +1,27 @@
 #Importaciones necesarias
-from variables import
+from variables import flota, agua, barco, disparo_perdido, disparo_acertado, filas_tablero, cols_tablero
 from tablero import Tablero 
 from funciones import * 
 
 def juego (): #Mensaje de bienvenida e instrucciones del juego
     
-    respuesta = input("Hola! Bienvenido al juego Hundir la Flota. Sabes cómo funciona este juego? (si/no)").strip().lower().replace("í","i") #Indicamos estas 3 funciones para quitar espacios, devolver todo a minúsculas y, #si el usuario introduce una tilde, se cambia por una i para que no dé
-                                                                                                                                            
-    if respuesta == "no":
-        print ('''Instrucciones del juego: El objetivo del juego es hundir todos los barcos del enemigo antes de que él lo haga.
+    while True:
+        respuesta = input("Hola! Bienvenido al juego Hundir la Flota. Sabes cómo funciona este juego? (si/no)").strip().lower().replace("í","i") #Indicamos estas 3 funciones para quitar espacios, devolver todo a minúsculas y, #si el usuario introduce una tilde, se cambia por una i para que no dé
+        
+        if respuesta == "no":
+            print ('''Instrucciones del juego: El objetivo del juego es hundir todos los barcos del enemigo antes de que él lo haga.
         El juego empieza teniendo cada uno de vosotros un tablero con unos barcos en posiciones que la otra persona no conoce.
         Tienes que decir a qué coordenada quieres impactar, como por ejemplo: Coordenada (1,2) o coordenada (3,5).
         Si aciertas, la otra persona dirá Tocado o Hundido. Sino, dirá Agua.
         Los turnos se alternan hasta que uno de los jugadores ya no tenga barcos.
         Gana la persona que hunda la flota primero. A por todas!''')
-    elif respuesta == "si":
-        print ("Pulsa Enter para empezar la partida")
-    else:
-        print ("Perdona, vuelve a introducir tu respuesta")
-        return
+            input("\nPulsa Enter para empezar la partida")
+            break
+        elif respuesta == "si":
+            input("Pulsa Enter para empezar la partida")
+            break
+        else:
+            print ("Perdona, vuelve a introducir tu respuesta (si/no)")
     #Dos nuevas instancias de la clase "Tablero" que crean los tableros para ambos jugadores (el humano y la máquina)
     jugador = Tablero(1)
     maquina = Tablero(2)
@@ -45,22 +48,30 @@ def juego (): #Mensaje de bienvenida e instrucciones del juego
                 print ("Has ganado! Enhorabuena!")
                 break #Sale del bucle principal y se termina el juego
 
-            turno_jugador = False #Damos turno a la máquina
+            # Si el resultado es "Agua" o "Ya disparado", cambia el turno. Si es "Tocado" o "Hundido", sigue el turno del jugador
+            if resultado == "Agua" or resultado == "Ya disparado":
+                turno_jugador = False #Damos turno a la máquina
+            # Si es "Tocado" o "Hundido", turno_jugador sigue siendo True (no cambiamos nada)
         
         else: #Turno de la máquina
         
             print ("\n Turno de la máquina") 
         
-            x,y = pedir_coordenadas_maquina() #Método que pide las coordenadas a la máquina (estará en funciones.py)
+            x,y = pedir_coordenadas_maquina(jugador) #Método que pide las coordenadas a la máquina (estará en funciones.py)
 
             resultado = procesar_disparo (jugador, x,y) #Comprueba si en x,y hay barco y actualiza el tablero propio del jugador, según sea "Tocado", "Hundido" o "Agua"
-            print (f"La máquina dispara a {x}, {y}: {resultado}") #Devolvemos un string con el resultado
+            # Convertir coordenadas a formato legible (1-based para mostrar)
+            letra = chr(65 + y)
+            print (f"La máquina dispara a {letra}{x+1}: {resultado}") #Devolvemos un string con el resultado
     
             if juego_terminado (jugador): #Comprobamos si, tras el disparo de la máquina, el jugador no tiene barcos
                 print ("Has perdido :( la máquina ha hundido todos tus barcos.")
-                break #Salimos del bicle principal y terminamos la partida
+                break #Salimos del bucle principal y terminamos la partida
 
-            turno_jugador = True #Si el juego no ha terminado, vuelve a ser el turno del jugador     
+            # Si el resultado es "Agua" o "Ya disparado", cambia el turno. Si es "Tocado" o "Hundido", sigue el turno de la máquina
+            if resultado == "Agua" or resultado == "Ya disparado":
+                turno_jugador = True #Si el juego no ha terminado, vuelve a ser el turno del jugador
+            # Si es "Tocado" o "Hundido", turno_jugador sigue siendo False (no cambiamos nada)     
 
 if __name__ == "__main__":
     juego() #Ejecutamos la función juego() al ser el archivo del programa principal
