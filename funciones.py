@@ -32,3 +32,22 @@ def pedir_coordenadas_maquina(): # Genera coordenadas aleatorias para que la má
     x = np.random.randint(0,10)
     y = np.random.randint(0,10)
     return x, y # Ej: devuelve (7,3)
+
+def recibir_disparos(tablero_objeto, x, y): # Procesa disparo de un jugador sobre un tablero
+    if tablero_objeto.tablero[x, y] == barco:  # Hay barco
+        tablero_objeto.tablero[x, y] = disparo_acertado
+        if juego_terminado(tablero_objeto):
+            return "Hundido"
+        else:
+            return "Tocado"
+    elif tablero_objeto.tablero[x, y] == agua:
+        tablero_objeto.tablero[x, y] = disparo_perdido
+        return "Agua"
+    else:
+        return "Ya disparado aquí"
+
+def procesar_disparo(tablero_objeto, x, y): # Para que la máquina dispare
+    return recibir_disparos(tablero_objeto, x, y)
+
+def juego_terminado(tablero_objeto): # Comprueba si todos los barcos de un tablero están hundidos
+    return not np.any(tablero_objeto.tablero == barco)
