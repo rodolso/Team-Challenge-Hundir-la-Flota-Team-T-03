@@ -47,7 +47,7 @@ def juego(): # Esta función es la principal, la que ejecutará la partida
             turno_jugador = False # Cambia el turno a la máquina
         
         else: 
-            print ("\n Turno de la máquina")
+            print ("\nTurno de la máquina")
         
             x, y = pedir_coordenadas_maquina() # La máquina genera un disparo aleatorio
 
