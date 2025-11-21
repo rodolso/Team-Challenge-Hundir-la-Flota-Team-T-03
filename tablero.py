@@ -1,3 +1,5 @@
+import numpy as np
+
 class Tablero: # La clase Tablero manejará toda la lógica de un tablero. Cada objeto Tablero representa el tablero de un jugador, sus barcos y disparos. Ej: jugador = Tablero(1) crea un tablero para el jugador 1.
     
     def __init__(self, id_jugador, filas=10, cols=10):
