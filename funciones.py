@@ -1,3 +1,7 @@
+import numpy as np
+from variables import *
+from tablero import Tablero
+
 def crear_tablero(filas_tablero=10, cols_tablero=10, agua="~"): # Crea un tablero vacío de tamaño filas x columnas con agua
     tablero = np.full((filas_tablero, cols_tablero,), agua) # El tablero es de 10x10 lleno de "~"
     return tablero

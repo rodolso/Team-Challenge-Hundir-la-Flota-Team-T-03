@@ -1,4 +1,5 @@
 #Importaciones necesarias
+import numpy as np
 from variables import *
 from tablero import Tablero
 from funciones import *
