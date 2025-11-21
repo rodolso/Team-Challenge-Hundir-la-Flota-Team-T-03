@@ -14,17 +14,20 @@ def tablero_bonito(tablero): # No entiendo esta función
         print(f"{i+1:2}│" + " ".join(tablero[i]) + "│")
     print("  " + "─" * (cols_tablero * 2))
 
-def pedir_coordenadas_usuario(filas_tablero, cols_tablero): 
+def pedir_coordenadas_usuario(tablero_enemigo):
+    filas_tablero, cols_tablero = tablero_enemigo.shape
     while True:
         entrada = input(f"Introduce coordenadas tipo x,y (1-{filas_tablero},1-{cols_tablero}): ")
         try:
             x_str, y_str = entrada.split(",")
             x = int(x_str) - 1
             y = int(y_str) - 1
-            if 0 <= x < filas_tablero and 0 <= y < cols_tablero:
-                return x, y
-            else:
+            if not (0 <= x < filas_tablero and 0 <= y < cols_tablero):
                 print("Coordenadas fuera de rango. Intenta de nuevo.")
+            elif tablero_enemigo[x, y] in ["X", "A"]:  # X=Tocado, A=Agua
+                print("Ya has disparado ahí. Elige otra coordenada.")
+            else:
+                return x, y
         except:
             print("Formato incorrecto. Usa x,y del 1 al 10.")
 
